@@ -1,24 +1,6 @@
 # vue2-daily-premium-c-side
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+vue 全家桶
+lib-flexible 根据 dpr 进行移动端适配
+postcss-px2rem 自动计算 rem
+vant
