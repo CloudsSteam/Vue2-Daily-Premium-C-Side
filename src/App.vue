@@ -11,8 +11,8 @@
   padding: 0;
 }
 #app {
-  width: 750px;
-  height: 100px;
+  // width: 750px;
+  // height: 100px;
   // background: #f00;
 }
 </style>
