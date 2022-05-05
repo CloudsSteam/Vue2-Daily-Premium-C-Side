@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import tool from '../util/tool';
 
 export default {
@@ -127,18 +128,25 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['getSideList']), // 结构vuex里面异步提交
     scrollTo(i, e) {
       if (this.move) {
         return;
       }
-      console.log(i);
+      // console.log(i, e);
       this.index = i;
       const { oneTab } = this.$refs;
       const itemWidth = e.target.offsetWidth;
       const itemLeft = e.target.getBoundingClientRect().left;
       const wrapperWidth = oneTab.offsetWidth;
+      // oneTab.scrollLeft+=itemWidth/2+itemLeft-wrapperWidth/2
       tool.moveTo(oneTab.scrollLeft, itemWidth / 2 + itemLeft - wrapperWidth / 2, oneTab, 'scrollLeft');
+      // 获取侧边栏数据
+      this.getSideList(this.menuList[i].title);// 异步提交调用api，响应结果存起来
     },
+  },
+  mounted() {
+    this.getSideList(this.menuList[0].title);
   },
 };
 </script>

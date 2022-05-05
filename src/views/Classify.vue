@@ -5,15 +5,18 @@
       <div>我是一棵荔枝包邮9.99</div>
     </div>
     <oneTab />
+
+    <sideBar />
   </div>
 </template>
 
 <script>
 import oneTab from '../components/OneTab.vue';
+import sideBar from '../components/sideBar.vue';
 
 export default {
   components: {
-    oneTab,
+    oneTab, sideBar,
   },
 };
 </script>
