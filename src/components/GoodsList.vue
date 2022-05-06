@@ -87,7 +87,7 @@ export default {
   .price-up::before {
     border-bottom-color: #ff1a90;
   }
-  .price-down::before {
+  .price-down:after {
     border-top-color: #ff1a90;
   }
 }
