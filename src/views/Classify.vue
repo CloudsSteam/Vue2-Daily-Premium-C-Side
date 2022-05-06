@@ -5,18 +5,36 @@
       <div>我是一棵荔枝包邮9.99</div>
     </div>
     <oneTab />
+    <template v-if="showContent">
+      <sideBar />
+      <goodsList />
+    </template>
 
-    <sideBar />
+    <van-loading
+      v-else
+      type="spinner"
+      size="1rem"
+      color="#1989fa"
+      vertical
+    />
+
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import oneTab from '../components/OneTab.vue';
 import sideBar from '../components/sideBar.vue';
+import goodsList from '../components/GoodsList.vue';
 
 export default {
+  computed: {
+    ...mapState({
+      showContent: (state) => state.showContent,
+    }),
+  },
   components: {
-    oneTab, sideBar,
+    oneTab, sideBar, goodsList,
   },
 };
 </script>
