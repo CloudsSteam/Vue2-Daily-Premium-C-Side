@@ -25,7 +25,7 @@
         <van-list
           v-model="loading"
           :finished="finished"
-          finished-text="没有了"
+          finished-text="没有更多了"
           @load="onLoad"
           :mmediate-check="false"
         >
@@ -34,14 +34,8 @@
             v-for="item in goodsList"
             :key="item.id"
             v-bind="item"
-          >
-
-          </goodsCard>
-          <!-- <goodsCard
-
-          /> -->
+          />
           <!-- :num="counterMap[item.id]" -->
-
         </van-list>
       </van-pull-refresh>
     </div>
@@ -56,7 +50,7 @@ export default {
   data() {
     return {
       type: 'all',
-      isLoading: false,
+      isLoading: false, // 加载状态啥的见vant组件库
       loading: false,
       finished: false,
       page: 1,
@@ -67,34 +61,37 @@ export default {
   },
   computed: {
     ...mapState({
-      goodsList: (state) => state.goodsList,
+      goodsList: (state) => state.goodsList, // 拿到卡片数据
 
       // counterMap: (state) => state.counterMap,
     }),
+
   },
   methods: {
     ...mapMutations(['resetGoodsList']),
     ...mapActions(['getGoodsList']),
     onRefresh() {
-      this.isloading = true;
+      this.isLoading = true;
       this.finished = false;
       this.loading = false;
       this.page = 1;
       this.resetGoodsList();
+      console.log('onRefresh 下拉刷新');
       this.getGoodsList({ page: 1, sortType: this.type });
       this.isLoading = false;
     },
     async onLoad() {
       this.page += 1;
       this.loading = true;
+      console.log('onLoad 加载中');
       const result = await this.getGoodsList({ page: this.page, sortType: this.type });
-      if (result) {
+      if (result) { // 异步返回true，没加载完，false搞完了
         this.loading = false;
       } else {
         this.finished = true;
       }
     },
-    changeType(type) {
+    changeType(type) { // 点击事件切换样式
       if (type === 'all') {
         this.type = 'all';
       } else if (type === 'sale') {
@@ -104,7 +101,7 @@ export default {
       } else {
         this.type = 'price-up';
       }
-      // this.onRefresh();
+      this.onRefresh();
     },
   },
 };
@@ -119,7 +116,7 @@ export default {
   box-sizing: border-box;
   padding: 0 8px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; //自右向左
   > div {
     width: 50px;
     height: 25px;

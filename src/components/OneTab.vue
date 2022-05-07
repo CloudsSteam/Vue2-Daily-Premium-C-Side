@@ -33,13 +33,13 @@ export default {
       index: 0,
       move: false,
       menuList: [
-        {
-          title: '时令水果',
-          imgURL: 'https://duyi-bucket.oss-cn-beijing.aliyuncs.com/img/时令水果.jpg',
-        },
+
         {
           title: '酒水冲调',
           imgURL: 'https://duyi-bucket.oss-cn-beijing.aliyuncs.com/img/酒水冲调.jpg',
+        }, {
+          title: '时令水果',
+          imgURL: 'https://duyi-bucket.oss-cn-beijing.aliyuncs.com/img/时令水果.jpg',
         },
         {
           title: '安心乳品',

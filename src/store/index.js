@@ -9,7 +9,7 @@ export default new Vuex.Store({
     sideList: [],
     showContent: false,
     size: 5,
-    goodList: [], // 商品列表
+    goodsList: [], // 商品列表。。。。找老半天错误居然是有地方漏写了s，居然也不提示报错
     type: null,
   },
   mutations: {
@@ -20,9 +20,9 @@ export default new Vuex.Store({
       state.showContent = bool;
     },
     setGoodsList(state, list) {
-      state.goodList = [...state.goodList, ...list];// 展开存起来
+      state.goodsList = [...state.goodsList, ...list];// 展开存起来
     },
-    resetGoodsList(state) {
+    resetGoodsList(state) { // 清空防止累加变多
       state.goodsList = [];
     },
     setGoodsType(state, type) {
@@ -38,16 +38,16 @@ export default new Vuex.Store({
       // console.log(value);
       commit('setShowContent', true);
     },
-    async getGoodsList({ state, commit }, options) {
+    async getGoodsList({ state, commit }, options) { // 有地方一直在触发提交
       // console.log(state.showContent);
       const { page, sortType } = options;
       const type = options.type || state.type;
       commit('setGoodsType', type);
       const { list, total } = await api.getGoodsList(type, page, state.size, sortType);
-      console.log(list);
+      // console.log(list, total);
       commit('setGoodsList', list);
       if (total > state.goodsList.length) {
-        return true;
+        return true; // 说明还没加载完，可以继续加载
       }
       return false;
     },

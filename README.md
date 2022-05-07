@@ -18,8 +18,10 @@ home 子路由 classify 和 shopping
 根据 ui 图还原样式
 搜索框样式
 oneTab 组件一级导航 flex 排列渲染
-点击选中样式过渡居中对应切换二级导航!!
+点击选中样式过渡，居中!!对应切换左侧二级导航 sideBar
 
-42.30
-CloudsSteam
-一直加空数据逻辑有误 goodslist
+其中右侧 GoodsList 组件，上部对应点击切换效果排序
+
+下面 card 组件传递 vuex 中的 goodsList
+
+下拉刷新效果,点击切换样式!!
