@@ -20,6 +20,7 @@
     <van-tabbar-item
       icon="cart-o"
       to="/home/shopping"
+      :badge="badge"
     >
       购物车
     </van-tabbar-item>
@@ -34,8 +35,22 @@
 </template>
 
 <script>
-export default {
+import { mapState } from 'vuex';
 
+export default {
+  computed: {
+    ...mapState({
+      counterMap: (state) => state.counterMap,
+    }),
+    badge() {
+      const count = Object.values(this.counterMap).reduce((prev, next) => prev + next, 0);
+      // 把所有商品的数目累加
+      if (count > 99) {
+        return '99+';
+      }
+      return count;
+    },
+  },
 };
 </script>
 

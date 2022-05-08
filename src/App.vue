@@ -8,7 +8,7 @@
 <script>
 export default {
   created() {
-    const counterMap = JSON.parse(localStorage.getItem('goods')) || {};
+    const counterMap = JSON.parse(localStorage.getItem('goods')) || {}; // 从本地拿购物车商品数量值
     this.$store.commit('setCounterMap', counterMap);
   },
 };
