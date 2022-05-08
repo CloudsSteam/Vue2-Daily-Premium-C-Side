@@ -34,8 +34,8 @@
             v-for="item in goodsList"
             :key="item.id"
             v-bind="item"
+            :num="counterMap[item.id]"
           />
-          <!-- :num="counterMap[item.id]" -->
         </van-list>
       </van-pull-refresh>
     </div>
@@ -63,7 +63,7 @@ export default {
     ...mapState({
       goodsList: (state) => state.goodsList, // 拿到卡片数据
 
-      // counterMap: (state) => state.counterMap,
+      counterMap: (state) => state.counterMap,
     }),
 
   },
@@ -101,7 +101,7 @@ export default {
       } else {
         this.type = 'price-up';
       }
-      this.onRefresh();
+      this.onRefresh();// 刷新渲染数据
     },
   },
 };

@@ -16,22 +16,42 @@
         >{{ i }}</div>
       </div>
       <div class="prices">￥{{ price }}</div>
-      <!-- <div class="counter">
-         <div v-if="num" @touchend="counter(id, -1)">
-           <img src="https://duyi-bucket.oss-cn-beijing.aliyuncs.com/img/rec.png">
-         </div>
-         <div class="num" v-if="num" >{{ num }}</div>
-         <div @touchend="counter(id, 1)">
-           <img src="https://duyi-bucket.oss-cn-beijing.aliyuncs.com/img/add.png">
-         </div>
-       </div> -->
+      <div class="counter">
+        <div
+          v-if="num"
+          @touchend="counter(id, -1)"
+        >
+          <img
+            src="https://duyi-bucket.oss-cn-beijing.aliyuncs.com/img/rec.png">
+        </div>
+        <div
+          class="num"
+          v-if="num"
+        >{{ num }}</div>
+        <div @touchend="counter(id, 1)">
+          <img
+            src="https://duyi-bucket.oss-cn-beijing.aliyuncs.com/img/add.png">
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   props: ['images', 'tags', 'title', 'price', 'desc', 'num', 'id', 'nofly'],
+  methods: {
+    ...mapMutations(['storageChange']),
+    // 奇怪GoodsList组件中也这样展开了，都没报错
+    // ES6展开解构失败不识别，查阅一天babel装了object-rest-spread插件也没用
+    // 静下心豁然开朗！也没正常报错methods(){}
+    counter(id, num) {
+      this.storageChange({ id, value: num });
+      // this.$store.commit('storageChange', { id, num });
+    },
+  },
 };
 </script>
 
@@ -82,26 +102,26 @@ export default {
       font-weight: 600;
       margin-top: 4px;
     }
-    //    .counter {
-    //   display: flex;
-    //   position: absolute;
-    //   bottom: 12px;
-    //   right: 15px;
-    //   justify-content: flex-end;
-    //   align-items: center;
-    //   > div:not(.num) {
-    //     width: 16px;
-    //     height: 16px;
-    //     img {
-    //       width: 100%;
-    //     }
-    //   }
-    //   .num {
-    //     padding:0 5px;
-    //     height: 22px;
-    //     line-height: 22px;
-    //   }
-    // }
+    .counter {
+      display: flex;
+      position: absolute;
+      bottom: 12px;
+      right: 15px;
+      justify-content: flex-end;
+      align-items: center;
+      > div:not(.num) {
+        width: 16px;
+        height: 16px;
+        img {
+          width: 100%;
+        }
+      }
+      .num {
+        padding: 0 5px;
+        height: 22px;
+        line-height: 22px;
+      }
+    }
   }
 }
 .overflow-hidden {

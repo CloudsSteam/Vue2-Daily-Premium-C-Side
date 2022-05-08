@@ -24,4 +24,4 @@ oneTab 组件一级导航 flex 排列渲染
 
 下面 card 组件传递 vuex 中的 goodsList
 
-下拉刷新效果,点击切换样式!!
+Vant PullRefresh 下拉刷新效果,点击切换样式!!
