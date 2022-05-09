@@ -43,6 +43,7 @@ export default {
       counterMap: (state) => state.counterMap,
     }),
     badge() {
+      // console.log(Object.values(this.counterMap));//把counterMap各项字段的值组成一个数组(一个包含对象自身的所有可枚举属性值的数组)
       const count = Object.values(this.counterMap).reduce((prev, next) => prev + next, 0);
       // 把所有商品的数目累加
       if (count > 99) {

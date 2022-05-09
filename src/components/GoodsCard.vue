@@ -46,9 +46,9 @@ export default {
     ...mapMutations(['storageChange']),
     // 奇怪GoodsList组件中也这样展开了，都没报错
     // ES6展开解构失败不识别，查阅一天babel装了object-rest-spread插件也没用
-    // 静下心豁然开朗！也没正常报错methods(){}
+    // 静下心豁然开朗！methods(){}也没正常报错
     counter(id, num) {
-      this.storageChange({ id, value: num });
+      this.storageChange({ id, value: num }); // 拿到变化商品id和数量改变vuex中counterMap
       // this.$store.commit('storageChange', { id, num });
     },
   },

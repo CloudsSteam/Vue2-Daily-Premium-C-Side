@@ -6,12 +6,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    sideList: [],
+    sideList: [], // 二级导航列表
     showContent: false,
     size: 5,
     goodsList: [], // 商品列表。。。。找老半天错误居然是有地方漏写了s，居然也不提示报错
     type: null,
-    ss: {},
     counterMap: {},
   },
   mutations: {
@@ -19,16 +18,16 @@ export default new Vuex.Store({
     // Vue.set中有三个参数，第一个是你要操作的数据，第二个是你要添加的字段，第三个是添加的字段的值；
     // 在Vue.delete中有两个参数，第一个是你要操作的数据，第二个是你要删除的字段
     storageChange(state, { id, value }) {
-      if (state.counterMap[id]) { // 看商品有没有存
+      if (state.counterMap[id]) { // 看商品有没有存这个商品的id
         if (value === -1 && state.counterMap[id] === 1) { // 数量为1再减就没了
           Vue.delete(state.counterMap, id);
         } else {
-          Vue.set(state.counterMap, id, state.counterMap[id] + value); // 正常改变
+          Vue.set(state.counterMap, id, state.counterMap[id] + value); // 正常改变id对应的值
         }
       } else {
         Vue.set(state.counterMap, id, 1);// 没有存储第一次加1
       }
-      localStorage.setItem('goods', JSON.stringify(state.counterMap));
+      localStorage.setItem('goods', JSON.stringify(state.counterMap)); // 存
     },
     setCounterMap(state, map) {
       state.counterMap = map;
@@ -63,11 +62,10 @@ export default new Vuex.Store({
       const { page, sortType } = options;
       const type = options.type || state.type;
       commit('setGoodsType', type);
-      // const { list, total }
-      state.ss = await api.getGoodsList(type, page, state.size, sortType);
+      const { list, total } = await api.getGoodsList(type, page, state.size, sortType);
       // console.log(list, total);
-      commit('setGoodsList', state.ss.list);
-      if (state.ss.total > state.goodsList.length) {
+      commit('setGoodsList', list);
+      if (total > state.goodsList.length) { // 判断是否需要继续加载
         return true; // 说明还没加载完，可以继续加载
       }
       return false;

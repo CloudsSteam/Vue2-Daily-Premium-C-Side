@@ -50,9 +50,9 @@ export default {
   data() {
     return {
       type: 'all',
-      isLoading: false, // 加载状态啥的见vant组件库
+      isLoading: false,
       loading: false,
-      finished: false,
+      finished: false, // 是否加载完成
       page: 1,
     };
   },
@@ -67,28 +67,35 @@ export default {
     }),
 
   },
+  // 重新进入加载key值相同
+  // mounted: {
+  //   resetGoodsList (),
+  //   onRefresh (),
+  // },
   methods: {
     ...mapMutations(['resetGoodsList']),
     ...mapActions(['getGoodsList']),
+    // 加载状态啥的见vant组件库2.12.47列表和下拉刷新
     onRefresh() {
-      this.isLoading = true;
-      this.finished = false;
+      this.isLoading = true;// 下拉刷新开始
+      this.finished = false;// 重新加载?
+      // 初始化
       this.loading = false;
       this.page = 1;
-      this.resetGoodsList();
-      console.log('onRefresh 下拉刷新');
+      this.resetGoodsList(); // 刷新要清空数据先
+      console.log('onRefresh 下拉刷新获取一页数据');
       this.getGoodsList({ page: 1, sortType: this.type });
       this.isLoading = false;
     },
     async onLoad() {
       this.page += 1;
-      this.loading = true;
+      this.loading = true;// true代表数据正在加载
       console.log('onLoad 加载中');
       const result = await this.getGoodsList({ page: this.page, sortType: this.type });
-      if (result) { // 异步返回true，没加载完，false搞完了
+      if (result) { // 异步返回true没加载完，false搞完了
         this.loading = false;
       } else {
-        this.finished = true;
+        this.finished = true;// 结束完事，显示没有更多了
       }
     },
     changeType(type) { // 点击事件切换样式
