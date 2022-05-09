@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/home',
-    component: Home,
+    component: () => import('@/views/Home.vue'),
     children: [
       {
         path: 'classify',
@@ -18,6 +17,9 @@ const routes = [
         component: () => import('@/views/Shopping.vue'),
       },
     ],
+  }, {
+    path: '/search',
+    component: () => import('@/views/Search.vue'),
   },
   {
     path: '*',

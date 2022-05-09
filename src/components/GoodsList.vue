@@ -30,9 +30,10 @@
           :mmediate-check="false"
         >
           <!-- //列表项 -->
+          <!-- // 重新进入加载key值相同 -->
           <goodsCard
-            v-for="item in goodsList"
-            :key="item.id"
+            v-for="(item,index) in goodsList"
+            :key="index"
             v-bind="item"
             :num="counterMap[item.id]"
           />

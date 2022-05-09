@@ -1,9 +1,13 @@
 <template>
   <div class="classify-container">
-    <div class="search-btn">
+    <router-link
+      class="search-btn"
+      tag="div"
+      to="/search"
+    >
       <van-icon name="search" />
       <div>我是一棵荔枝包邮9.99</div>
-    </div>
+    </router-link>
     <oneTab />
     <template v-if="showContent">
       <sideBar />

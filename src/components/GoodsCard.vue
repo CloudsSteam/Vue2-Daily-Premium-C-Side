@@ -62,7 +62,8 @@ export default {
       const { offsetWidth: carWidth, offsetHeight: carHeight } = shopCar;// 购物车宽高
       const endX = carX + carWidth / 2;
       const endY = carY + carHeight / 2;
-      console.log(left, top, endX, endY, imgWidth, imgHeight);
+      console.log('left:', left, 'top:', top, 'imgWidth:', imgWidth, 'imgHeight', imgHeight,
+        'endX:', endX, 'endY:', endY);
 
       Animate({ // 组件
         startX: left,
