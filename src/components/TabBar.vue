@@ -21,6 +21,7 @@
       icon="cart-o"
       to="/home/shopping"
       :badge="badge"
+      id="shop-car"
     >
       购物车
     </van-tabbar-item>

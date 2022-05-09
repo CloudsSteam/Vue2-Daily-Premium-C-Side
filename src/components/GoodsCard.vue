@@ -39,6 +39,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import Animate from '../tools/animate/index';
 
 export default {
   props: ['images', 'tags', 'title', 'price', 'desc', 'num', 'id', 'nofly'],
@@ -50,6 +51,28 @@ export default {
     counter(id, num) {
       this.storageChange({ id, value: num }); // 拿到变化商品id和数量改变vuex中counterMap
       // this.$store.commit('storageChange', { id, num });
+      if (num === -1) {
+        return;
+      }
+      const { top, left } = this.$refs.img.getBoundingClientRect();// 图片位置
+      const { offsetWidth: imgWidth, offsetHeight: imgHeight } = this.$refs.img;// 宽高
+
+      const shopCar = document.getElementById('shop-car');
+      const { left: carX, top: carY } = shopCar.getBoundingClientRect();// 购物车位置
+      const { offsetWidth: carWidth, offsetHeight: carHeight } = shopCar;// 购物车宽高
+      const endX = carX + carWidth / 2;
+      const endY = carY + carHeight / 2;
+      console.log(left, top, endX, endY, imgWidth, imgHeight);
+
+      Animate({ // 组件
+        startX: left,
+        startY: top,
+        endX,
+        endY,
+        src: this.$refs.img.src,
+        width: imgWidth,
+        height: imgHeight,
+      });
     },
   },
 };
