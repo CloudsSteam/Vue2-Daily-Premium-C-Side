@@ -13,9 +13,31 @@
         @search="onSearch"
         @focus="focus"
         @input="input"
-      />
+      >
+        <template
+          #action
+          v-if="showList"
+        >
+          <div @touchend="onSearch(value)">搜索</div>
+        </template>
+        <template
+          #action
+          v-else
+        >
+          <van-icon
+            name="cart-o"
+            id="shop-car"
+            class="shop-car"
+            :badge="badge"
+            @click="$router.push('/home/shopping')"
+          />
+        </template>
+      </van-search>
     </div>
-    <div class="like-search">
+    <div
+      class="like-search"
+      v-if="likeList.length&&showList"
+    >
       <van-list>
         <van-cell
           v-for="item in likeList"
@@ -32,35 +54,97 @@
         </van-cell>
       </van-list>
     </div>
-    <div class="goods-list">
-      33.17
+    <div
+      class="goods-list"
+      v-if="!showList"
+    >
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+        :immediate-check="false"
+      >
+        <!-- //列表项 -->
+        <!-- // 重新进入加载key值相同 -->
+        <goodsCard
+          v-for="(item,index) in goodsList"
+          :key="index"
+          v-bind="item"
+          :num="counterMap[item.id]"
+        />
+      </van-list>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import goodsCard from '../components/GoodsCard.vue';
+
 export default {
+  components: {
+    goodsCard,
+  },
   data() {
     return {
       place: '我是一棵荔枝',
       value: this.place,
       likeList: [],
       timer: null,
+      loading: false,
+      finished: false, // 表完成
+      page: 1,
+      size: 5,
+      goodsList: [],
+      showList: true, // 控制显示哪一个
+      total: 0,
     };
+  },
+  computed: {
+    ...mapState({
+      counterMap: (state) => state.counterMap,
+    }),
+    badge() {
+      const count = Object.values(this.counterMap).reduce((prev, next) => prev + next, 0);
+      if (count > 99) {
+        return '99+';
+      }
+      return count;
+    },
   },
 
   methods: {
+
+    async onLoad() {
+      const value = await this.$api.search(this.value, this.page, this.size);
+
+      this.goodsList = [...this.goodsList, ...value.list];
+      console.log(value, this.goodsList);
+      this.total = value.total;
+      this.loading = false;
+      if (this.goodsList.length >= this.total) {
+        this.finished = true;
+      } else {
+        this.page += 1;
+      }
+    },
     onSearch(value) {
       console.log(value);
-      if (value === '') {
-        this.value = this.place;
-      } else {
+      if (value) {
         this.value = value;
+      } else {
+        this.value = this.place;
       }
       this.likeList = [];
+      this.page = 1;
+      this.finished = false;
+
+      this.onLoad();// 初始化完执行onLoad函数
+      this.showList = false;
     },
     focus() {
-
+      this.showList = true;
     },
     // 防抖
     async input() {
@@ -105,11 +189,15 @@ export default {
     position: fixed;
     top: 0;
     left: 15px;
+    z-index: 22;
     .arr-left {
       font-size: 22px;
     }
     .search-content {
       flex: 1;
+      .shop-car {
+        font-size: 15px;
+      }
     }
   }
   .like-search {
@@ -118,6 +206,13 @@ export default {
     width: 100%;
     box-sizing: border-box;
     padding-left: 30px;
+  }
+  .goods-list {
+    position: relative;
+    width: 345px;
+    margin: 48px auto 0;
+    z-index: 10;
+    background: #fff;
   }
 }
 </style>
