@@ -10,6 +10,7 @@
     </router-link>
     <oneTab />
     <template v-if="showContent">
+      <!-- 值发生变化是否需要重新获取数据 -->
       <sideBar />
       <goodsList />
     </template>
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import oneTab from '../components/OneTab.vue';
 import sideBar from '../components/sideBar.vue';
 import goodsList from '../components/GoodsList.vue';
@@ -35,7 +36,20 @@ export default {
   computed: {
     ...mapState({
       showContent: (state) => state.showContent,
+      sideList: (state) => state.sideList,
     }),
+  },
+  methods: {
+    ...mapMutations(['resetGoodsList']),
+    ...mapActions(['getGoodsList']),
+  },
+  watch: { // 值发生变化是否需要重新获取数据
+    showContent() {
+      if (this.showContent === true) {
+        this.resetGoodsList();
+        this.getGoodsList({ type: this.sideList[0], page: 1, sortType: 'all' });
+      }
+    },
   },
   components: {
     oneTab, sideBar, goodsList,

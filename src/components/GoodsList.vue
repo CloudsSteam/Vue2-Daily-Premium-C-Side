@@ -27,7 +27,7 @@
           :finished="finished"
           finished-text="没有更多了"
           @load="onLoad"
-          :mmediate-check="false"
+          :immediate-check="false"
         >
           <!-- //列表项 -->
           <!-- // 重新进入加载key值相同 -->

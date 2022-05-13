@@ -1,6 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+VueRouter.prototype.back = false;
+VueRouter.prototype.goBack = function goBack() {
+  this.back = true;
+  this.go(-1);
+};
 Vue.use(VueRouter);
 
 const routes = [

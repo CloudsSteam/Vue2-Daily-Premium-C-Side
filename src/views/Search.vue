@@ -1,10 +1,13 @@
 <template>
   <div class="search-wrapper">
     <div class="search-head">
+      <!-- <router-link to="/home/classify"> -->
       <van-icon
         name="arrow-left"
         class="arr-left"
+        @click="$router.goBack()"
       />
+      <!-- </router-link> -->
       <van-search
         class="search-content"
         v-model="value"
@@ -75,16 +78,27 @@
         />
       </van-list>
     </div>
+    <div
+      class="my-history"
+      v-if="likeList.length <= 0 && showList"
+    >
+      <my-history
+        :searchList="searchList"
+        @search="onSearch"
+      >
+      </my-history>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import goodsCard from '../components/GoodsCard.vue';
+import myHistory from '../components/MyHistory.vue';
 
 export default {
   components: {
-    goodsCard,
+    goodsCard, myHistory,
   },
   data() {
     return {
@@ -99,7 +113,11 @@ export default {
       goodsList: [],
       showList: true, // 控制显示哪一个
       total: 0,
+      searchList: [],
     };
+  },
+  created() {
+    this.searchList = JSON.parse(localStorage.getItem('searchList')) || [];
   },
   computed: {
     ...mapState({
@@ -129,13 +147,25 @@ export default {
         this.page += 1;
       }
     },
-    onSearch(value) {
+    async onSearch(value) {
       console.log(value);
       if (value) {
         this.value = value;
       } else {
         this.value = this.place;
       }
+      const result = this.searchList.find((item) => item.value === this.value);
+      if (result) {
+        result.time = new Date().getTime();
+        this.searchList.sort((a, b) => b.time - a.time);
+      } else {
+        this.searchList.unshift({ value: this.value, time: new Date().getTime() });
+        if (this.searchList.length >= 11) {
+          this.searchList.pop();
+        }
+      }
+
+      localStorage.setItem('searchList', JSON.stringify(this.searchList));
       this.likeList = [];
       this.page = 1;
       this.finished = false;
@@ -146,7 +176,7 @@ export default {
     focus() {
       this.showList = true;
     },
-    // 防抖
+    // 防抖qq
     async input() {
       if (this.value === '') { // place被取代
         this.likeList = [];
@@ -213,6 +243,13 @@ export default {
     margin: 48px auto 0;
     z-index: 10;
     background: #fff;
+  }
+  .my-history {
+    width: 350px;
+    position: absolute;
+    top: 65px;
+    left: 10px;
+    z-index: 1;
   }
 }
 </style>
