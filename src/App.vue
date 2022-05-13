@@ -23,7 +23,7 @@ export default {
     };
   },
   watch: {
-    $route(to, from) { // 默认进入不需要动画！！！！！！！！！！！！！！！！！！！！
+    $route(to, from) { // 默认进入不需要动画！！
       if (to.name === 'classify' && from.name === 'search') {
         this.$router.back = true;
       }

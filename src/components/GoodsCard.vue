@@ -51,7 +51,7 @@ export default {
     counter(id, num) {
       this.storageChange({ id, value: num }); // 拿到变化商品id和数量改变vuex中counterMap
       // this.$store.commit('storageChange', { id, num });
-      if (num === -1) {
+      if (num === -1 || this.nofly) {
         return;
       }
       const { top, left } = this.$refs.img.getBoundingClientRect();// 图片位置

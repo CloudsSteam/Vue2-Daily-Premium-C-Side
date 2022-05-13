@@ -55,9 +55,9 @@ export default {
       this.getGoodsList({ type: this.sideList[i], page: 1, sortType: 'all' });
     },
   },
-  mounted() {
-    // this.resetGoodsList();
-    // this.getGoodsList({ type: this.sideList[0], page: 1, sortType: 'all' });
+  mounted() { // 还是得加上不然下拉不获取新数据
+    this.resetGoodsList();
+    this.getGoodsList({ type: this.sideList[0], page: 1, sortType: 'all' });
   },
 };
 </script>

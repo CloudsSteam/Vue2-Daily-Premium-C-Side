@@ -15,6 +15,7 @@ const routes = [
     children: [
       {
         path: 'classify',
+        name: 'classify',
         component: () => import('@/views/Classify.vue'),
       },
       {
@@ -24,6 +25,7 @@ const routes = [
     ],
   }, {
     path: '/search',
+    name: 'search',
     component: () => import('@/views/Search.vue'),
   },
   {

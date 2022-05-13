@@ -19,7 +19,7 @@ export default new Vuex.Store({
     // 在Vue.delete中有两个参数，第一个是你要操作的数据，第二个是你要删除的字段
     storageChange(state, { id, value }) {
       if (state.counterMap[id]) { // 看商品有没有存这个商品的id
-        if (value === -1 && state.counterMap[id] === 1) { // 数量为1再减就没了
+        if ((value === -1 && state.counterMap[id] === 1) || value === -Infinity) { // 数量为1再减就没了
           Vue.delete(state.counterMap, id);
         } else {
           Vue.set(state.counterMap, id, state.counterMap[id] + value); // 正常改变id对应的值
