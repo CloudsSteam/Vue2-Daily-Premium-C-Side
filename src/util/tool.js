@@ -1,5 +1,5 @@
-/* eslint-disable no-param-reassign */
-function moveTo(start, end, dom, prop) {
+/* eslint-disable no-param-reassign */// eslint注释直接修改dom属性
+function moveTo(start, end, dom, prop) { // 修改dom的prop属性
   let dis = 0;
   let speed = 5;
   if (end < 0) {
