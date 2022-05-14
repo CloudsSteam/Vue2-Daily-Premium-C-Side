@@ -25,11 +25,7 @@ Home 组件下为 vant 标签栏上面 router-view 切换
 - 搜索框样式
 - oneTab 组件一级导航 flex 排列渲染样式
 - 点击选中样式过渡，居中!!对应切换左侧二级导航 sideBar
-- 根据接口文档 title 发起 axios 数据请求成功结果存储到 vuex 中
+- 根据接口文档 title 发起 axios 数据请求成功结果存储到 vuex 中 sideList
 - sideBar 组件渲染 vuex 中的二级导航数据(同样点击居中过渡)
-- 点击侧边栏获取 goodsList 商品列表页组件！！！！！！！！！！
-  其中右侧 GoodsList 组件，上部对应点击切换效果排序
-
-下面 card 组件传递 vuex 中的 goodsList
-
-Vant PullRefresh 下拉刷新效果,点击切换样式!!
+- 点击侧边栏获取 goodsList 组件一页数据先(注意传参值)成功结果展开累加存储到 vuex 中的 goodsList
+- 右侧 GoodsList 组件,上部对应点击切换效果排序区(注意点击样式逻辑),下面为商品卡片列表。其中 Vant 中 list PullRefresh 下拉加载(多获取一页数据)上拉刷新效果(详情见 vant 组件 list 的下拉刷新)。商品卡片数目加减购物车(id,value)存储到 vuex 和 localStorage 中,以及飞入购物车动画封装

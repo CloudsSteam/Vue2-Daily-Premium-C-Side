@@ -17,11 +17,12 @@
         价格</div>
     </div>
     <div class="list-content">
+      <!-- //下拉刷新 -->
       <van-pull-refresh
         v-model="isLoading"
         @refresh="onRefresh"
       >
-        <!-- //下拉刷新 -->
+        <!-- //列表项 -->
         <van-list
           v-model="loading"
           :finished="finished"
@@ -29,7 +30,6 @@
           @load="onLoad"
           :immediate-check="false"
         >
-          <!-- //列表项 -->
           <!-- // 重新进入加载key值相同 -->
           <goodsCard
             v-for="(item,index) in goodsList"
@@ -51,8 +51,8 @@ export default {
   data() {
     return {
       type: 'all',
-      isLoading: false,
-      loading: false,
+      isLoading: false, // 下拉刷新的
+      loading: false, // 列表
       finished: false, // 是否加载完成
       page: 1,
     };
@@ -79,14 +79,14 @@ export default {
     // 加载状态啥的见vant组件库2.12.47列表和下拉刷新
     onRefresh() {
       this.isLoading = true;// 下拉刷新开始
-      this.finished = false;// 重新加载?
-      // 初始化
+      this.finished = false;
       this.loading = false;
       this.page = 1;
       this.resetGoodsList(); // 刷新要清空数据先
       console.log('onRefresh 下拉刷新获取一页数据');
+      // 初始化完
       this.getGoodsList({ page: 1, sortType: this.type });
-      this.isLoading = false;
+      this.isLoading = false;// 表示加载结束
     },
     async onLoad() {
       this.page += 1;

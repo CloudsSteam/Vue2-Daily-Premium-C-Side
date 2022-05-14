@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     sideList: [], // 二级导航列表
-    showContent: false,
+    showContent: false, // 没有在加载中
     size: 5,
     goodsList: [], // 商品列表。。。。找老半天错误居然是有地方漏写了s，居然也不提示报错
     type: null,
@@ -64,7 +64,7 @@ export default new Vuex.Store({
       commit('setGoodsType', type);
       const { list, total } = await api.getGoodsList(type, page, state.size, sortType);
       // console.log(list, total);
-      commit('setGoodsList', list);
+      commit('setGoodsList', list);// 累加存储起来
       if (total > state.goodsList.length) { // 判断是否需要继续加载
         return true; // 说明还没加载完，可以继续加载
       }
