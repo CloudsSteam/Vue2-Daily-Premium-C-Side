@@ -19,16 +19,19 @@ export default {
   },
   data() {
     return {
-      transitionName: 'left',
+      transitionName: '', // 'left',
     };
   },
   watch: {
     $route(to, from) { // 默认进入不需要动画！！
-      if (to.name === 'classify' && from.name === 'search') {
+      if (to.name === 'classify' && from.name !== 'search') { // 不是从search跳到classify
         this.$router.back = true;
       }
+      // if (from.name === 'classify' && to.name === 'search') {
+      //   this.$router.back = false;
+      // }
       if (this.$router.back) {
-        this.transitionName = 'right';
+        this.transitionName = 'right';// 右侧进入
       } else {
         this.transitionName = 'left';
       }
