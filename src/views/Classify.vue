@@ -72,7 +72,7 @@ export default {
     color: #a1a1a1;
     > * {
       display: inline-block;
-      vertical-align: middle;
+      vertical-align: middle; //垂直居中
     }
   }
 }

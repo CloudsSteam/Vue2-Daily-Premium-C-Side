@@ -130,17 +130,17 @@ export default {
   methods: {
     ...mapActions(['getSideList']), // 结构vuex里面异步提交
     scrollTo(i, e) {
-      if (this.move) {
+      if (this.move) { // 正在移动的点击不算直接跳出
         return;
       }
-      // console.log(i, e);
+      // console.log(i, e.target);
       this.index = i;
       const { oneTab } = this.$refs;
       const itemWidth = e.target.offsetWidth;
       const itemLeft = e.target.getBoundingClientRect().left;
       const wrapperWidth = oneTab.offsetWidth;
       // oneTab.scrollLeft+=itemWidth/2+itemLeft-wrapperWidth/2
-      tool.moveTo(oneTab.scrollLeft, itemWidth / 2 + itemLeft - wrapperWidth / 2, oneTab, 'scrollLeft');
+      tool.moveTo(oneTab.scrollLeft, itemWidth / 2 + itemLeft - wrapperWidth / 2, oneTab, 'scrollLeft');// start, end, dom, prop(属性)
       // 获取侧边栏数据
       this.getSideList(this.menuList[i].title);// 异步提交调用api，响应结果存起来
     },
