@@ -28,7 +28,7 @@
           :finished="finished"
           finished-text="没有更多了"
           @load="onLoad"
-          :immediate-check="false"
+          :immediate-check="true"
         >
           <!-- // 重新进入加载key值相同 -->
           <goodsCard
@@ -77,7 +77,7 @@ export default {
     ...mapMutations(['resetGoodsList']),
     ...mapActions(['getGoodsList']),
     // 加载状态啥的见vant组件库2.12.47列表和下拉刷新
-    onRefresh() {
+    onRefresh() { // bug下拉刷新后不能正常加载
       this.isLoading = true;// 下拉刷新开始
       this.finished = false;
       this.loading = false;
@@ -86,12 +86,15 @@ export default {
       console.log('onRefresh 下拉刷新获取一页数据');
       // 初始化完
       this.getGoodsList({ page: 1, sortType: this.type });
+      // this.onLoad();
+      // this.loading = false;
       this.isLoading = false;// 表示加载结束
     },
     async onLoad() {
       this.page += 1;
       this.loading = true;// true代表数据正在加载
       console.log('onLoad 加载中');
+      // this.resetGoodsList();
       const result = await this.getGoodsList({ page: this.page, sortType: this.type });
       if (result) { // 异步返回true没加载完，false搞完了
         this.loading = false;
